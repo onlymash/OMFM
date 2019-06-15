@@ -16,9 +16,11 @@ class OneMoreButtonFabScrollBehaviour(context: Context, attrs: AttributeSet) : C
     }
 
     override fun onNestedScroll(coordinatorLayout: CoordinatorLayout, child: OneMoreFabMenu,
-                                target: View, dxConsumed: Int, dyConsumed: Int, dxUnconsumed: Int, dyUnconsumed: Int, type: Int) {
-        super.onNestedScroll(coordinatorLayout, child, target, dxConsumed, dyConsumed, dxUnconsumed,
-                dyUnconsumed, type)
+                                target: View, dxConsumed: Int, dyConsumed: Int,
+                                dxUnconsumed: Int, dyUnconsumed: Int, type: Int, consumed: IntArray) {
+        super.onNestedScroll(coordinatorLayout, child, target,
+                dxConsumed, dyConsumed, dxUnconsumed, dyUnconsumed, type, consumed)
+
         if (dyConsumed > 0 && child.visibility == View.VISIBLE) {
             child.hide()
         } else if (dyConsumed < 0 && child.visibility != View.VISIBLE) {

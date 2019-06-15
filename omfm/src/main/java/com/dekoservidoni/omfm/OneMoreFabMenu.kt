@@ -58,7 +58,7 @@ class OneMoreFabMenu @JvmOverloads constructor(context: Context, attrs: Attribut
     private val initialFabRightMargin = 20
     private val initialFabBottomMargin = 25
     private val labelSpacing = 20
-    private val childElevation = 10f
+    private var childElevation = 10f
     private val labelPadding = 8
     private val initialFabSpacing = 35
 
@@ -92,7 +92,7 @@ class OneMoreFabMenu @JvmOverloads constructor(context: Context, attrs: Attribut
     init {
         initializeUI(attrs)
 
-        downChildAnimation.setAnimationListener(object : Animation.AnimationListener {
+        downChildAnimation.setAnimationListener(object : AnimationListener {
 
             override fun onAnimationStart(animation: Animation) {
                 // empty
@@ -142,7 +142,7 @@ class OneMoreFabMenu @JvmOverloads constructor(context: Context, attrs: Attribut
         maxButtonHeight = 0
 
         // calculating the size of every fab + label
-        for(i in 0..(childCount-1)) {
+        for(i in 0 until childCount) {
             val view = getChildAt(i)
 
             if(view.id != mainLabelId && view.id != initialFab.id && view.visibility != View.GONE) {
@@ -163,7 +163,9 @@ class OneMoreFabMenu @JvmOverloads constructor(context: Context, attrs: Attribut
             // the entire screen
             height = Resources.getSystem().displayMetrics.heightPixels
             setBackgroundColor(expandedBackgroundColor)
-            setOnClickListener({ collapse() })
+            setOnClickListener {
+                collapse()
+            }
         } else {
             // calculating the total width and height of the component
             width = maxButtonWidth + initialFabSpacing
@@ -282,7 +284,7 @@ class OneMoreFabMenu @JvmOverloads constructor(context: Context, attrs: Attribut
 
     private fun addButtons() {
         // add the other buttons from the options "menu"
-        for (i in 0..(options.size() - 1)) {
+        for (i in 0 until options.size()) {
 
             val item = options.getItem(i)
 
@@ -331,10 +333,6 @@ class OneMoreFabMenu @JvmOverloads constructor(context: Context, attrs: Attribut
 
         val buttonColor = if(isFirst) colorMainButton else colorSecondaryButtons
         fab.backgroundTintList = ColorStateList.valueOf(buttonColor)
-
-        if (Build.VERSION.SDK_INT >= 21) {
-            fab.elevation = childElevation
-        }
 
         if(isFirst) {
             mainCollapsedDrawable = item.icon
@@ -413,7 +411,7 @@ class OneMoreFabMenu @JvmOverloads constructor(context: Context, attrs: Attribut
         var nextY = if(isExpanded()) initialFabTop - fabSpacing
         else initialFabTop + initialFab.measuredHeight + fabSpacing
 
-        for(i in 0..(childCount-1)) {
+        for(i in 0 until childCount) {
             val view = getChildAt(i)
 
             // skipping gone views (because we don't need to calculate), the initial button and main label if exists

@@ -36,6 +36,6 @@
         app:rotate_main_button="false"
         app:label_text_color="@color/colorPrimary"
         app:enable_main_as_action="true"
-        app:main_action_drawable="@mipmap/ic_launcher"/>
+        app:main_action_drawable="@drawable/ic_close_white_24dp" />
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

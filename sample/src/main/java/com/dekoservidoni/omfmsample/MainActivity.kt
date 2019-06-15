@@ -21,14 +21,12 @@ class MainActivity : AppCompatActivity(), OneMoreFabMenu.OptionsClick {
 
     override fun onOptionClick(optionId: Int?) {
 
-        var text = ""
-
-        when(optionId) {
-            R.id.main_option -> text = "Option Main clicked!"
-            R.id.option1 -> text = "Option 1 clicked!"
-            R.id.option2 -> text = "Option 2 clicked!"
-            R.id.option3 -> text = "Option 3 clicked!"
-            R.id.option4 -> text = "Option 4 clicked!"
+        val text = when(optionId) {
+            R.id.option1 -> "Option 1 clicked!"
+            R.id.option2 -> "Option 2 clicked!"
+            R.id.option3 -> "Option 3 clicked!"
+            R.id.option4 -> "Option 4 clicked!"
+            else -> ""
         }
 
         if(text.isNotEmpty()) {
