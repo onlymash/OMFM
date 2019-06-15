@@ -7,8 +7,6 @@
         <attr name="color_main_button" format="color"/>
         <attr name="color_secondary_buttons" format="color"/>
         <attr name="rotate_main_button" format="boolean"/>
-        <attr name="size_main_button" format="integer"/>
-        <attr name="size_secondary_buttons" format="integer"/>
         <attr name="expanded_background_color" format="color"/>
         <attr name="label_background_color" format="color"/>
         <attr name="label_background_drawable" format="reference"/>

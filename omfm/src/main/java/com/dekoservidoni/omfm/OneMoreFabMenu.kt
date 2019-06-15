@@ -1,5 +1,6 @@
 package com.dekoservidoni.omfm
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.content.res.ColorStateList
 import android.content.res.Resources
@@ -7,8 +8,8 @@ import android.graphics.Typeface
 import android.graphics.drawable.ColorDrawable
 import android.graphics.drawable.Drawable
 import android.os.Build
-import android.support.design.widget.FloatingActionButton
-import android.support.v4.content.ContextCompat
+import com.google.android.material.floatingactionbutton.FloatingActionButton
+import androidx.core.content.ContextCompat
 import android.util.AttributeSet
 import android.view.MenuInflater
 import android.view.MenuItem
@@ -51,8 +52,6 @@ class OneMoreFabMenu @JvmOverloads constructor(context: Context, attrs: Attribut
     // sizes
     private var maxButtonWidth = 0
     private var maxButtonHeight = 0
-    private var mainFabSize = -1
-    private var secondaryFabSize = -1
 
     // layout parameters
     private var fabSpacing = 0
@@ -234,6 +233,7 @@ class OneMoreFabMenu @JvmOverloads constructor(context: Context, attrs: Attribut
 
     private fun hideMenu() {
         initialFab.hide(object : FloatingActionButton.OnVisibilityChangedListener() {
+            @SuppressLint("RestrictedApi")
             override fun onHidden(fab: FloatingActionButton?) {
                 super.onShown(fab)
                 fab?.visibility = View.INVISIBLE
@@ -266,9 +266,6 @@ class OneMoreFabMenu @JvmOverloads constructor(context: Context, attrs: Attribut
         val labelTextColor = attributes.getResourceId(R.styleable.OneMoreFabMenu_label_text_color, R.color.omfm_label_text_black)
         this.labelTextColor = ContextCompat.getColor(context, labelTextColor)
 
-        this.mainFabSize = attributes.getInt(R.styleable.OneMoreFabMenu_size_main_button, FloatingActionButton.SIZE_NORMAL)
-        this.secondaryFabSize = attributes.getInt(R.styleable.OneMoreFabMenu_size_secondary_buttons, FloatingActionButton.SIZE_MINI)
-
         this.closeOnClick = attributes.getBoolean(R.styleable.OneMoreFabMenu_close_on_click, false)
         this.rotateMainButton = attributes.getBoolean(R.styleable.OneMoreFabMenu_rotate_main_button, true)
         this.enableMainAsAction = attributes.getBoolean(R.styleable.OneMoreFabMenu_enable_main_as_action, false)
@@ -297,9 +294,7 @@ class OneMoreFabMenu @JvmOverloads constructor(context: Context, attrs: Attribut
                 // to be the first fab button of the component
                 initialFab = fab
 
-                if(enableMainAsAction
-                        && !item.title.isEmpty()
-                        && item.title != null) {
+                if(enableMainAsAction && !item.title.isNullOrEmpty()) {
                     val mainLabel = buildTextLabel(item, true)
                     initialFab.setTag(tagId, mainLabel)
                     addView(mainLabel)
@@ -318,7 +313,7 @@ class OneMoreFabMenu @JvmOverloads constructor(context: Context, attrs: Attribut
     }
 
     private fun animateChildren(animation: Animation) {
-        for(i in 0..(childCount-1)) {
+        for(i in 0 until childCount) {
             val child = getChildAt(i)
             if(child.id != initialFab.id){
                 child.startAnimation(animation)
@@ -332,8 +327,7 @@ class OneMoreFabMenu @JvmOverloads constructor(context: Context, attrs: Attribut
         fab.layoutParams = generateDefaultLayoutParams()
         fab.setImageDrawable(item.icon)
 
-        val size = if(isFirst) mainFabSize else secondaryFabSize
-        fab.size = size
+        fab.size = if(isFirst) FloatingActionButton.SIZE_NORMAL else FloatingActionButton.SIZE_MINI
 
         val buttonColor = if(isFirst) colorMainButton else colorSecondaryButtons
         fab.backgroundTintList = ColorStateList.valueOf(buttonColor)
