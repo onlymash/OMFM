@@ -21,7 +21,7 @@ import android.view.animation.AnimationUtils
 import android.widget.PopupMenu
 import android.widget.TextView
 
-class OneMoreFabMenu @JvmOverloads constructor(context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0)
+open class OneMoreFabMenu @JvmOverloads constructor(context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0)
     : ViewGroup(context, attrs, defStyleAttr), View.OnClickListener {
 
     interface OptionsClick {
